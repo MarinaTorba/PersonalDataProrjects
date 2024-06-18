@@ -34,7 +34,6 @@ En el teu equip haurà de 3 a 5 estudiants que tindran els següents rols:
 - data: Emmagatzemar tots els conjunts de dades utilitzades en el projecte.
 - scripts: Emmagatzemar tots els scripts de codi que s'utilitzen per a processar dades, realitzar anàlisis i generar resultats.
 - results: Almacenar los resultados finales del análisis, tales como gráficos e informes.
-- .gitignore: per a excloure arxius innecessaris com a dades brutes, arxius temporals, etc.
 
 
 
