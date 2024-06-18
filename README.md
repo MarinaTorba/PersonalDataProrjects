@@ -23,8 +23,20 @@ En el teu equip haurà de 3 a 5 estudiants que tindran els següents rols:
 ### Reunions importants
 
 - Cada **dilluns** el Departament haurà de presentar, de forma unificada, l'anàlisi dels KPI´s corresponents així com recomanacions de negoci.
-- Cada **dimarts** la Directora de Departament comunica les novetats de negoci i planifica el següent sprint.
+- Cada **dimarts** la Directora de Departament comunicarà les novetats de negoci i planifica el següent sprint.
 - Cada dues setmanes, **els dijous**, es realitza una retrospectiva dels sprints realitzades.
 - El projecte requereix una dedicació setmanal, per estudiant, de 10 hores aproximadament.
-  
+
+### Estructura del repositori
+
+- planning: Planificació de sprints i reunions
+- data: Emmagatzemar tots els conjunts de dades utilitzades en el projecte.
+- scripts: Emmagatzemar tots els scripts de codi que s'utilitzen per a processar dades, realitzar anàlisis i generar resultats.
+- results: Almacenar los resultados finales del análisis, tales como gráficos e informes.
+- .gitignore: per a excloure arxius innecessaris com a dades brutes, arxius temporals, etc.
+
+
+
+### ¡TREBALLA EN EQUIP!
+
   
