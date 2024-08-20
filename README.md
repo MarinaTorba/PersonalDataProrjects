@@ -30,7 +30,8 @@ En el teu equip haurà de 3 a 5 estudiants que tindran els següents rols:
 
 ### Estructura del repositori
 
-- Equip: hauràs de seleccionar la carpeta del teu equip per a treballar.
+- Equip: Hauràs de seleccionar la carpeta del teu equip per a treballar.
+- Data: Conté tots els fitxers essencials per treballar amb la base de dades, incloent els scripts SQL, els datasets originals en csv, el modelatge relacional i els permisos d'accés a la base de dades.
 - Scripts: Emmagatzemar tots els scripts de codi que s'utilitzen per a processar dades, realitzar anàlisis i generar resultats.
 - Results: Almacenar los resultados finales del análisis, tales como gráficos e informes.
 
