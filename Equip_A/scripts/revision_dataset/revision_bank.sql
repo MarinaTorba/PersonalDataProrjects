@@ -57,7 +57,7 @@ FROM BANK_marketing
 GROUP BY contact
 ORDER BY cantidad DESC;
 
-/* Cantidad de llamadas en la campaña*/
+/* Cantidad de llamadas en laBANK_marketingBANK_marketingBANK_marketing campaña*/
 SELECT campaign, COUNT(campaign) AS cantidad
 FROM BANK_marketing
 GROUP BY campaign
@@ -76,14 +76,10 @@ GROUP BY deposit
 ORDER BY cantidad DESC;
 
 
-/*Valores duplicados? */
+/* Valores duplicados (solo hay uno)*/
 
-WITH cte AS (
-  SELECT id, balance, campaign,
-         ROW_NUMBER() OVER (PARTITION BY id, balance, campaign ORDER BY id) AS rn
-  FROM BANK_marketing
-)
-SELECT COUNT(*) AS total_rows
-FROM cte
-WHERE rn > 1;
+SELECT age, job, marital, education, `default`, balance, housing, loan, contact, `day`, `month`, duration, campaign, pdays, previous, poutcome, deposit, COUNT(*) AS conteo
+FROM BANK_marketing
+GROUP BY age, job, marital, education, `default`, balance, housing, loan, contact, `day`, `month`, duration, campaign, pdays, previous, poutcome, deposit
+HAVING COUNT(*) > 1;
 
