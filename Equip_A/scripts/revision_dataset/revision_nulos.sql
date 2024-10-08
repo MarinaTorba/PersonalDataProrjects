@@ -217,4 +217,24 @@ WHERE deposit IS NULL;
 
 UPDATE BANK_marketing
 SET job = "admin"
-WHERE job = "admin."
+WHERE job = "admin.";
+
+/* Tenemos un número muy elevado de Unknown en "poutcome" (8326) */
+
+SELECT DISTINCT previous, poutcome, COUNT(*)
+FROM BANK_marketing
+WHERE poutcome = "Unknown"
+GROUP BY previous, poutcome;
+
+/* Cambiamos los que no tengan contacto previo a "n/a" (8324) */
+
+UPDATE BANK_marketing
+SET poutcome = "n/a"
+WHERE poutcome = "Unknown"
+AND previous = 0;
+
+/* Y asignamos los dos registros restantes a la categoría "other" */
+
+UPDATE BANK_marketing
+SET poutcome = "other"
+WHERE poutcome = "Unknown";
