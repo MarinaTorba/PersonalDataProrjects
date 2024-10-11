@@ -1,9 +1,11 @@
-USE EquipA;
+
 /* 
 Creación Vista v_marketing 
 Se modifica el nombre de day y month para mayor comodidad en lAS queries y explicación de lo que representa el campo
 Se añaden los campos calculados duration_slot, age_slot y pdays_slot para categorizar los datos en franjAS
 */
+
+USE EquipA;
 
 CREATE  view v_marketing AS 
 (SELECT id, age,job, marital, education,`default` AS default_credit, contact, `day` AS 'contact_day', `month` AS 'contact_month',
