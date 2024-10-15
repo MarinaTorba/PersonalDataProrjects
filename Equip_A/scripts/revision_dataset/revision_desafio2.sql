@@ -78,6 +78,170 @@ FROM BANK_marketing131024
 GROUP BY housing, loan, deposit, `default`
 ORDER BY calls DESC;
 
+/* Observemos los nulos de housing ahora. Como hay muchos registros duplicados, utilizaremos el valor de la fila duplicada para rellenar los nulls. */
+
+SELECT *
+FROM BANK_marketing131024
+WHERE housing IS NULL;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 270 AND balance = 2785;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 270 AND balance = 2785;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 221 AND balance = 687;
+
+UPDATE BANK_marketing131024
+SET housing = "yes"
+WHERE duration = 221 AND balance = 687;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 705 AND balance = 1940;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 705 AND balance = 1940;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 798 AND balance = 883;
+
+UPDATE BANK_marketing131024
+SET housing = "yes"
+WHERE duration = 798 AND balance = 883;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 309 AND balance = 330;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 328 AND balance = -150;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 668 AND balance = 729;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 171 AND balance = -31;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 154 AND balance = 89;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 95 AND balance = 2557;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 95 AND balance = 2557;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 167 AND balance = 110;
+
+# no duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 350 AND balance = 421;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 27 AND balance = 53;
+
+UPDATE BANK_marketing131024
+SET housing = "yes"
+WHERE duration = 27 AND balance = 53;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 90 AND balance = 1310;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 90 AND balance = 1310;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 28 AND balance = 3884;
+
+UPDATE BANK_marketing131024
+SET housing = "yes"
+WHERE duration = 28 AND balance = 3884;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 331 AND balance = 454;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 331 AND balance = 454;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 763 AND balance = 792;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 763 AND balance = 792;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 97 AND balance = -338;
+
+UPDATE BANK_marketing131024
+SET housing = "yes"
+WHERE duration = 97 AND balance = -338;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 1178 AND balance = 691;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 1178 AND balance = 691;
+
+# duplicado
+SELECT *
+FROM BANK_marketing131024
+WHERE duration = 257 AND balance = 1664;
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE duration = 257 AND balance = 1664;
+
+/* Si no hay duplicado, entonces imputaremos con "no" por ser el valor más frecuente */
+
+UPDATE BANK_marketing131024
+SET housing = "no"
+WHERE housing IS NULL;
+
 /* Eliminamos el punto final de "admin." */
 
 UPDATE BANK_marketing131024
