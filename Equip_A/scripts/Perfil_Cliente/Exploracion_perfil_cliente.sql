@@ -292,7 +292,7 @@ WHERE job IN ("management", "student", "unemployed", "retired")
 GROUP BY job, balance
 ORDER BY job, deposit_rate DESC;
 
-# Y segmentamos también por balance positivo y negativo
+# Y segmentamos también por edad
 SELECT 
 	job, 
     age_slot,
