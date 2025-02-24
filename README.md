@@ -10,15 +10,18 @@ Si recentment ingresses al projecte, llegeix tot abans de començar.
 ¡Benvingut al repositori de Projecte Data GitHub de IT Academy de Barcelona Activa! En aquesta secció et guiarem sobre els elements claus del projecte perquè puguis aprofitar al màxim aquesta experiència d'aprenentatge.
 
 ### Escenar
-Integraràs el Departament d'Analistes de Dades d'una institució bancària que està implementant campanyes de màrqueting per persuadir els clients i els clients perquè se subscriguin a dipòsits a termini oferts pel banc.
+Integraràs el Departament d'Analistes de Dades d'una empresa.
 
 ### Equip
-En el teu equip haurà de 3 a 5 estudiants que tindran els següents rols:
-
-- Analistes de Màrqueting i Comunicació (estudiants)
-- Analistes de Finances i Risc Creditici (estudiants)
-- Analistes del Perfil del Client (estudiants)
-- Facilitadora/Directora (mentora)
+En el teu equip haurà de 3 a 5 estudiants que integraran un Departament d'Analista de Dades.
+Rols possibles:
+- Analistes de Màrqueting i Comunicació
+- Analistes de Finances i Risc Creditici
+- Analistes del Perfil del Client
+- Analista d'operacions i gestió d'inventari
+- Analista d'experiència del client
+- Responsable de Qualitat del Repositori (rol rotatiu)
+- Facilitadora/ Directora del departament: Mentora
 
 ### Reunions importants
 
@@ -31,7 +34,7 @@ En el teu equip haurà de 3 a 5 estudiants que tindran els següents rols:
 ### Estructura del repositori
 
 - Equip: Hauràs de seleccionar la carpeta del teu equip per a treballar.
-- Data: Conté tots els fitxers essencials per treballar amb la base de dades, incloent els scripts SQL, els datasets originals en csv, el modelatge relacional i els permisos d'accés a la base de dades.
+- Data: Conté tots els fitxers essencials per treballar amb la base de dades, incloent els scripts SQL i els datasets originals en csv.
 - Scripts: Emmagatzemar tots els scripts de codi que s'utilitzen per a processar dades, realitzar anàlisis i generar resultats.
 - Results: Almacenar los resultados finales del análisis, tales como gráficos e informes.
 
