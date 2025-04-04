@@ -1,2 +1,2 @@
-## Presentations
+## Presentation
 ### Sprint 2
