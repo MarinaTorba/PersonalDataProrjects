@@ -23,18 +23,25 @@ def get_latest_table(config):
         tables = [list(row.values())[0] for row in cursor.fetchall()]
 
         # table names ending with exactly 8 digits
-        #date_pattern = re.compile(r'(\d{8})$')
+        date_pattern = re.compile(r'(\d{8})$')
+
+        # tabels with date, table+date pairs
+        dated_tables = [
+            (t, pd.to_datetime(date_pattern.search(t).group(1), format='%d%m%Y'))
+            for t in tables if date_pattern.search(t)
+        ]
+
         # find the latest table
-        #latest_table = max(tables, key=lambda x: date_pattern.findall(x))
-        new_tabel = 'Tourist_Accommodation07042025'
-        
-        query = f"SELECT * FROM {new_tabel}"
+        latest_table = max(dated_tables, key=lambda x: x[1])[0]
+
+        # download latest table
+        query = f"SELECT * FROM {latest_table}"
         cursor.execute(query)
         records = cursor.fetchall()
-        print(f"Total rows in table {new_tabel}: {cursor.rowcount}")
+        print(f"Total rows in table {latest_table }: {cursor.rowcount}")
         
         df = pd.DataFrame(records)
-        return new_tabel, df
+        return latest_table , df
 
     except mysql.connector.Error as error:
         print(f"Failed to fetch data: {error}")
