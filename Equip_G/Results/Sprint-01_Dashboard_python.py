@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 # Ruta del archivo CSV
-df = pd.read_csv(r'C:\Users\Albert\ProjecteData\Equip_G\Data\2025_04_10_Sprint01.csv')
+df = pd.read_csv(r'../Data/2025_04_10_Sprint01.csv')
 
 # KPI 1: Tasa de ocupación calculada utilizando availability_30
 df['tasa_ocupacion'] = ((30 - df['availability_30']) / 30) * 100  # Fórmula correcta
