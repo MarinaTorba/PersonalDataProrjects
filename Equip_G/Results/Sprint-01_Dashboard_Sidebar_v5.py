@@ -150,3 +150,4 @@ st.pyplot(fig)
 # Footer
 st.markdown("---")
 st.caption("Desarrollado por Equip_G • Powered by Python & Streamlit 🚀")
+
