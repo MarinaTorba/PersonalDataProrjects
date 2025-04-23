@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html
+from dash import dcc, html, dash_table
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
@@ -8,19 +8,17 @@ import numpy as np
 app = dash.Dash(__name__)
 
 # Ruta al archivo CSV
-csv_path = r'../Data/2025_04_22_Sprint02.csv'
+csv_path = r'E:\MOOCs\ITACADEMY\Data_Analytics\Simulador\2025_04_22_Sprint02.csv'
 df = pd.read_csv(csv_path)
 
 # ==============================
-# PREPROCESAMIENTO Y KPIs
+# KPIs
 # ==============================
 df['tasa_ocupacion'] = ((30 - df['availability_30']) / 30) * 100
-df['num_amenities'] = df['normalized_amenities'].apply(lambda x: len(str(x).split(',')) if pd.notnull(x) else 0)
 
 ocupacion_ciudad = df.groupby('city').apply(
     lambda x: ((30 - x['availability_30']).sum() / (30 * len(x))) * 100
 )
-
 ciudad_mayor_ocupacion = ocupacion_ciudad.idxmax()
 porcentaje_ocupacion_ciudad = ocupacion_ciudad.max()
 
@@ -37,7 +35,7 @@ mejor_item_valorado = df[[
 valor_mejor_item = df[mejor_item_valorado].mean()
 
 # ==============================
-# 🎨 Estilos CSS centralizados
+# 🎨 Estilos CSS
 # ==============================
 styles = {
     'titulo': {
@@ -69,39 +67,26 @@ styles = {
     },
     'seccion': {
         'margin-top': '50px'
-    },
-    'graph': {
-        'title_size': 40,
-        'axis_title': 28,
-        'ticks': 24,
-        'text_cell': 22
     }
 }
 
 # ==============================
-# Correlación entre características y precio por ciudad
+# Correlación características-precio
 # ==============================
-variables_correlacion = [
-    'accommodates', 'bedrooms', 'beds', 'review_scores_location', 'num_amenities', 'price'
-]
+variables_correlacion = ['accommodates', 'bedrooms', 'beds', 'review_scores_location', 'price']
 df_corr = df[['city'] + variables_correlacion].dropna()
 resultados_correlacion = {}
 
 for ciudad, subdf in df_corr.groupby('city'):
-    correlaciones = subdf[variables_correlacion].corr().loc['price'].drop('price')
+    subdf_numerico = subdf[variables_correlacion]
+    correlaciones = subdf_numerico.corr().loc['price'].drop('price')
     resultados_correlacion[ciudad] = correlaciones
 
 correlaciones_precio = pd.DataFrame(resultados_correlacion).T.round(2)
 
-# Etiquetas con valor de correlación promedio
-column_labels = [
-    f"{var.replace('_', ' ').capitalize()} ({correlaciones_precio[var].abs().mean():.2f})"
-    for var in correlaciones_precio.columns
-]
-
 fig_correlacion = go.Figure(data=go.Heatmap(
     z=correlaciones_precio.values,
-    x=column_labels,
+    x=[col.replace('_', ' ').capitalize() for col in correlaciones_precio.columns],
     y=correlaciones_precio.index.str.capitalize(),
     colorscale='RdBu',
     zmin=-1,
@@ -109,42 +94,81 @@ fig_correlacion = go.Figure(data=go.Heatmap(
     text=correlaciones_precio.values.round(2),
     hoverinfo='text',
     texttemplate="%{text}",
-    colorbar=dict(title="Correlació")
+    colorbar=dict(title="Correlación")
 ))
-
-fig_correlacion.update_traces(
-    textfont={"size": 20}  # Tamaño del texto dentro de las celdas
-)
 
 fig_correlacion.update_layout(
     title='Mapa de calor de correlación entre características y precios por ciudad',
-    xaxis_title='Características (media de correlación con precio)',
+    xaxis_title='Características',
     yaxis_title='Ciudad',
     title_font=dict(size=22),
-    margin=dict(t=80, l=100, r=50, b=100),
-    xaxis=dict(tickfont=dict(size=20)),
-    yaxis=dict(tickfont=dict(size=20))
+    margin=dict(t=80, l=100, r=50, b=100)
 )
 
-
-# ==============================
-# Texto dinámico para correlación
-# ==============================
+# Texto explicativo
 top_vars = correlaciones_precio.abs().mean().sort_values(ascending=False).head(3).index
-
-top_vars_texto = [
-    f"{var.replace('_', ' ').capitalize()} ({correlaciones_precio[var].abs().mean():.2f})"
-    for var in top_vars
-]
-
-ciudades_destacadas = correlaciones_precio[top_vars].abs().mean(axis=1).sort_values(ascending=False).head(3).index
+top_vars_nombres = [v.replace('_', ' ').capitalize() for v in top_vars]
+ciudades_destacadas = correlaciones_precio.loc[:, top_vars].abs().mean(axis=1).sort_values(ascending=False).head(3).index
 ciudades_nombres = [c.capitalize() for c in ciudades_destacadas]
 
 texto_correlacion = f"""
-El análisis muestra que las características con mayor correlación con el precio son: {', '.join(top_vars_texto)}.
+El análisis muestra que las características con más correlación con el precio son: {', '.join(top_vars_nombres)}.
 Esto indica que estos factores tienen un gran impacto sobre el valor de los alojamientos.
-Las ciudades en las que esta relación es más destacada son: {', '.join(ciudades_nombres)}.
+Las ciudades donde esta relación es más destacada son: {', '.join(ciudades_nombres)}.
 """
+
+# ==============================
+# 🛠 OPERACIONES
+# ==============================
+# Impacto reserva automática
+df_Book = df.groupby(['city', 'is_instant_bookable'])[
+    ['availability_30', 'availability_60', 'availability_90', 'availability_365']
+].mean().reset_index()
+
+pivot_df_Book = df_Book.pivot(index='city', columns='is_instant_bookable')
+
+# ✅ Aplanar columnas MultiIndex para evitar errores
+pivot_df_Book.columns = [f"{col[0]}_{col[1]}" if isinstance(col, tuple) else col for col in pivot_df_Book.columns]
+
+# Calcular coeficientes de disponibilidad
+for dias in ['30', '60', '90', '365']:
+    col_true = f'availability_{dias}_VERDADERO'
+    col_false = f'availability_{dias}_FALSO'
+    pivot_df_Book[f'Coeficiente ({dias} días)'] = (
+        pivot_df_Book[col_true] - pivot_df_Book[col_false]
+    ) / (
+        pivot_df_Book[col_true] + pivot_df_Book[col_false]
+    )
+
+# Crear gráfica
+ciudades = pivot_df_Book.index.tolist()
+fig_reserva_auto = go.Figure()
+fig_reserva_auto.add_trace(go.Bar(x=ciudades, y=pivot_df_Book['Coeficiente (30 días)'], name='30 días', marker_color='#ADD8E6'))
+fig_reserva_auto.add_trace(go.Bar(x=ciudades, y=pivot_df_Book['Coeficiente (60 días)'], name='60 días', marker_color='#87CEEB'))
+fig_reserva_auto.add_trace(go.Bar(x=ciudades, y=pivot_df_Book['Coeficiente (90 días)'], name='90 días', marker_color='#4682B4'))
+fig_reserva_auto.add_trace(go.Bar(x=ciudades, y=pivot_df_Book['Coeficiente (365 días)'], name='365 días', marker_color='#00008B'))
+
+fig_reserva_auto.update_layout(
+    barmode='group',
+    title='Impacte de la reserva automàtica en la disponibilitat mitjana',
+    xaxis_title='Ciutat',
+    yaxis_title='Coeficient de disponibilitat',
+    yaxis=dict(range=[-0.25, 0.25]),
+    title_font=dict(size=22)
+)
+
+# Taula de resum: nombre d’allotjaments amb/sense reserva automàtica
+tabla_resumen_Book = df.groupby(['city', 'is_instant_bookable']).size().unstack(fill_value=0)
+tabla_resumen_Book.columns = ['Sin reserva automática', 'Con reserva automática']
+tabla_resumen_Book = tabla_resumen_Book.reset_index()
+
+# Taula de coeficients de disponibilitat
+tabla_coeficientes_disponibilidad = pivot_df_Book[[
+    "Coeficiente (30 días)",
+    "Coeficiente (60 días)",
+    "Coeficiente (90 días)",
+    "Coeficiente (365 días)"
+]].reset_index()
 
 # ==============================
 # Layout de la aplicación
@@ -180,22 +204,66 @@ app.layout = html.Div([
     ]),
 
     html.Div([
-        html.H2("¿Qué características de los alojamientos (comodidades, capacidad y puntuación de la zona) están más relacionadas con los precios en cada ciudad?", style=styles['titulo']),
+        html.H2("¿Qué características de los alojamientos estan más relacionadas con los precios?", style=styles['titulo']),
         html.P(texto_correlacion, style={
             'text-align': 'justify',
-            'font-size': '22px',
-            'line-height': '1.6',
-            'margin': '30px 0',
-            'color': '#1E2A38',
-            'font-weight': '500'
+            'font-size': '18px',
+            'margin': '20px 80px'
         }),
         dcc.Graph(id='correlation-by-city', figure=fig_correlacion)
+    ], style=styles['seccion']),
+
+    html.Div([
+        html.H2("Operaciones", style=styles['titulo']),
+        html.H3("¿Qué impacto tiene la opción de reservar automáticamente (sin revisión del propietario) en la disponibilidad media en cada ciudad?", style={
+            'text-align': 'center',
+            'font-size': '24px',
+            'color': '#1E2A38',
+            'margin': '30px 0'
+        }),
+        dcc.Graph(figure=fig_reserva_auto),
+
+        html.H3("Distribución de alojamientos con/sin reserva automática", style={
+            'text-align': 'center',
+            'font-size': '22px',
+            'color': '#1E2A38',
+            'margin': '40px 0 20px 0'
+        }),
+        dash_table.DataTable(
+            columns=[{"name": col, "id": col} for col in tabla_resumen_Book.columns],
+            data=tabla_resumen_Book.to_dict('records'),
+            style_cell={'textAlign': 'center', 'fontSize': 16, 'padding': '10px'},
+            style_header={
+                'backgroundColor': '#1E2A38',
+                'color': 'white',
+                'fontWeight': 'bold',
+                'fontSize': 18
+            },
+            style_table={'width': '80%', 'margin': '0 auto'}
+        ),
+
+        html.H3("Coeficients de disponibilitat per reserva automàtica", style={
+            'text-align': 'center',
+            'font-size': '22px',
+            'color': '#1E2A38',
+            'margin': '40px 0 20px 0'
+        }),
+        dash_table.DataTable(
+            columns=[{"name": col, "id": col} for col in tabla_coeficientes_disponibilidad.columns],
+            data=tabla_coeficientes_disponibilidad.to_dict('records'),
+            style_cell={'textAlign': 'center', 'fontSize': 16, 'padding': '10px'},
+            style_header={
+                'backgroundColor': '#1E2A38',
+                'color': 'white',
+                'fontWeight': 'bold',
+                'fontSize': 18
+            },
+            style_table={'width': '80%', 'margin': '0 auto'}
+        )
     ], style={'width': '90%', 'margin': '0 auto'})
 ], style=styles['seccion'])
 
-# ==============================
-# Ejecutar la app
-# ==============================
+
+# Ejecutar la aplicación
 if __name__ == '__main__':
     app.run(debug=True)
-
