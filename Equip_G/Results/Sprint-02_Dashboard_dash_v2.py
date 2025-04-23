@@ -150,9 +150,9 @@ fig_reserva_auto.add_trace(go.Bar(x=ciudades, y=pivot_df_Book['Coeficiente (365 
 
 fig_reserva_auto.update_layout(
     barmode='group',
-    title='Impacte de la reserva automàtica en la disponibilitat mitjana',
-    xaxis_title='Ciutat',
-    yaxis_title='Coeficient de disponibilitat',
+    title='Impacto de la reserva automática en la disponibilidad media',
+    xaxis_title='Ciudad',
+    yaxis_title='Coeficiente de disponibilidad',
     yaxis=dict(range=[-0.25, 0.25]),
     title_font=dict(size=22)
 )
@@ -242,7 +242,7 @@ app.layout = html.Div([
             style_table={'width': '80%', 'margin': '0 auto'}
         ),
 
-        html.H3("Coeficients de disponibilitat per reserva automàtica", style={
+        html.H3("Coeficientes de disponibilidad para reserva automática", style={
             'text-align': 'center',
             'font-size': '22px',
             'color': '#1E2A38',
