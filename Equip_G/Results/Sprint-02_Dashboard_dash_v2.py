@@ -8,7 +8,7 @@ import numpy as np
 app = dash.Dash(__name__)
 
 # Ruta al archivo CSV
-csv_path = r'E:\MOOCs\ITACADEMY\Data_Analytics\Simulador\2025_04_22_Sprint02.csv'
+csv_path = r'../Data/2025_04_22_Sprint02.csv'
 df = pd.read_csv(csv_path)
 
 # ==============================
@@ -168,7 +168,7 @@ tabla_coeficientes_disponibilidad = pivot_df_Book[[
     "Coeficiente (60 días)",
     "Coeficiente (90 días)",
     "Coeficiente (365 días)"
-]].reset_index()
+]].reset_index().round(2)
 
 # ==============================
 # Layout de la aplicación
