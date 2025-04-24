@@ -161,6 +161,8 @@ fig_reserva_auto.update_layout(
 tabla_resumen_Book = df.groupby(['city', 'is_instant_bookable']).size().unstack(fill_value=0)
 tabla_resumen_Book.columns = ['Sin reserva automática', 'Con reserva automática']
 tabla_resumen_Book = tabla_resumen_Book.reset_index()
+tabla_resumen_Book[['Sin reserva automática', 'Con reserva automática']] = \
+    tabla_resumen_Book[['Sin reserva automática', 'Con reserva automática']].applymap(lambda x: f"{x:,}")
 
 # Taula de coeficients de disponibilitat
 tabla_coeficientes_disponibilidad = pivot_df_Book[[
@@ -215,6 +217,26 @@ app.layout = html.Div([
 
     html.Div([
         html.H2("Operaciones", style=styles['titulo']),
+
+        html.H3("Coeficientes de disponibilidad para reserva automática", style={
+            'text-align': 'center',
+            'font-size': '22px',
+            'color': '#1E2A38',
+            'margin': '40px 0 20px 0'
+        }),
+        dash_table.DataTable(
+            columns=[{"name": col, "id": col} for col in tabla_coeficientes_disponibilidad.columns],
+            data=tabla_coeficientes_disponibilidad.to_dict('records'),
+            style_cell={'textAlign': 'center', 'fontSize': 16, 'padding': '10px'},
+            style_header={
+                'backgroundColor': '#1E2A38',
+                'color': 'white',
+                'fontWeight': 'bold',
+                'fontSize': 18
+            },
+            style_table={'width': '80%', 'margin': '0 auto'}
+        )        
+
         html.H3("¿Qué impacto tiene la opción de reservar automáticamente (sin revisión del propietario) en la disponibilidad media en cada ciudad?", style={
             'text-align': 'center',
             'font-size': '24px',
@@ -241,25 +263,6 @@ app.layout = html.Div([
             },
             style_table={'width': '80%', 'margin': '0 auto'}
         ),
-
-        html.H3("Coeficientes de disponibilidad para reserva automática", style={
-            'text-align': 'center',
-            'font-size': '22px',
-            'color': '#1E2A38',
-            'margin': '40px 0 20px 0'
-        }),
-        dash_table.DataTable(
-            columns=[{"name": col, "id": col} for col in tabla_coeficientes_disponibilidad.columns],
-            data=tabla_coeficientes_disponibilidad.to_dict('records'),
-            style_cell={'textAlign': 'center', 'fontSize': 16, 'padding': '10px'},
-            style_header={
-                'backgroundColor': '#1E2A38',
-                'color': 'white',
-                'fontWeight': 'bold',
-                'fontSize': 18
-            },
-            style_table={'width': '80%', 'margin': '0 auto'}
-        )
     ], style={'width': '90%', 'margin': '0 auto'})
 ], style=styles['seccion'])
 
