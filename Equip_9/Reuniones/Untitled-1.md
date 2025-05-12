@@ -1,1 +1,0 @@
-12/05/2025 - Liberación sprint
