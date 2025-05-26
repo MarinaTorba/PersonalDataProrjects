@@ -28,3 +28,4 @@ Esta convención permite mantener una trazabilidad clara de los resultados gener
 
 - `Resultados_250512.ipynb`
 - `Presentación_resultados_250512.pptx`
+- `Presentación_resultados_250519.pptx`

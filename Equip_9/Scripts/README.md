@@ -25,9 +25,13 @@ Los archivos siguen una nomenclatura basada en:
 
 - `Extracción datos de MySQL.ipynb`
 - `EDA_250512.ipynb`
+- `EDA_250519.ipynb`
 - `Limpieza Datos_250512.ipynb`
+- `Limpieza Datos_250519.ipynb`
 - `KPIs_250512.ipynb`
+- `KPIs_250519.ipynb`
 - `Informe de marketing_250512.pbix`
-- `Pregunta de Negoci - Client_250512.ipynb`
-- `Pregunta de Negocio - Finanzas_250512.ipynb`
+- `Analisis_Client_250512.ipynb`
+- `Analisis_Finanzas_250512.ipynb`
+- `Analisis_Marketing_250512.docx`
 - `Tratamiento de datos de Marketing y comunicación_250512.docx`
