@@ -26173,9 +26173,17 @@
 26171,26382,58,management,divorced,unknown,False,2986,False,False,cellular,16,Sep,414,1,91,5,other,True,2024-09-16
 26172,26383,59,retired,married,secondary,False,599,True,False,cellular,7,May,31,1,-1,0,unknown,False,2024-05-07
 26173,21071,29,blue-collar,single,secondary,False,0,False,False,cellular,6,Feb,437,2,-1,0,unknown,False,2024-02-06
+26174,311,38,student,single,tertiary,False,3316,False,False,unknown,17,Jun,1345,3,-1,0,unknown,True,2024-06-17
 26175,18971,43,technician,divorced,tertiary,False,101,False,False,cellular,19,Aug,173,3,-1,0,unknown,False,2024-08-19
 26176,16838,52,technician,married,secondary,False,195,True,False,cellular,18,Feb,220,1,63,5,failure,True,2024-02-18
+26177,9358,36,blue-collar,divorced,secondary,False,2278,True,False,unknown,23,May,152,2,-1,0,unknown,False,2024-05-23
+26178,8554,35,management,married,tertiary,False,71,True,False,cellular,30,Apr,510,2,-1,0,unknown,False,2024-04-30
+26179,1305,44,technician,single,secondary,False,250,False,False,telephone,2,Mar,382,2,-1,0,unknown,True,2024-03-02
+26180,3580,26,technician,single,tertiary,False,515,False,False,cellular,31,May,775,1,-1,0,unknown,True,2024-05-31
+26181,9471,48,blue-collar,divorced,secondary,False,-314,True,False,cellular,18,May,7,5,-1,0,unknown,False,2024-05-18
+26182,1549,46,management,married,primary,False,3229,True,False,cellular,20,Apr,1550,1,-1,0,unknown,True,2024-04-20
 26183,20814,28,technician,single,secondary,False,631,False,False,cellular,29,Apr,835,7,-1,0,unknown,False,2024-04-29
 26184,17441,33,blue-collar,married,primary,False,0,False,False,cellular,8,May,174,1,-1,0,unknown,False,2024-05-08
+26185,8281,56,blue-collar,divorced,primary,True,-1,False,False,cellular,18,Jul,304,3,-1,0,unknown,False,2024-07-18
 26186,20919,56,management,divorced,tertiary,False,310,False,False,unknown,20,Jun,75,4,-1,0,unknown,False,2024-06-20
 26187,21121,40,blue-collar,married,secondary,False,-839,True,True,cellular,16,Jul,1018,2,-1,0,unknown,True,2024-07-16
