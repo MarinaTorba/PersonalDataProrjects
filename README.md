@@ -26,8 +26,8 @@ The aim was to discover actionable insights that could help HR departments reduc
 
 Equip_11/
 ├── data/ # Internal and external datasets
-├── notebooks/ # EDA, modeling, and insights notebooks
-├── scripts/ # Reusable functions for cleaning & analysis
+├── results/ # final pdf presentation per challenge
+├── scripts/ # EDA, modeling, and insights notebooks
 ├── outputs/ # Visualizations and exported results
 └── README.md
 
