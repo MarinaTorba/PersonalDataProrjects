@@ -55,17 +55,14 @@ bash
 jupyter notebook
 Open the notebooks inside /notebooks and explore the analysis.
 
-👥 Team
+Team
 Developed by Equip 11 — IT Academy
 Main contributor: Marina Torba
 
 
-🌐 License
+License
 This project is intended for educational and academic use only.
 
-🤝 Let’s Connect
+Let’s Connect
 Have questions or feedback? Feel free to connect with me on LinkedIn or explore more on my GitHub.
-
-yaml
-Копировать
-Редактировать
+https://www.linkedin.com/in/marinatorba/
